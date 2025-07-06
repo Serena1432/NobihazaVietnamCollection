@@ -2807,3 +2807,10 @@ pre {
 	color: #ddd;
 	font-weight: 700;
 }
+
+.modal ul {
+	margin-left: 10px;
+	margin-bottom: 10px;
+	color: #ccc;
+	line-height: 25px;
+}

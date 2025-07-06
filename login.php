@@ -2,7 +2,14 @@
 require "api/functions.php";
 require "api/users/functions.php";
 require "api/users/cookies.php";
-if ($user) redirect_to_home();
+if ($user) {
+    if (get("speedrun")) {
+        setcookie("nbhzvn_username", "", time() - 3600, "/", "." . $_SERVER["HTTP_HOST"]);
+        setcookie("nbhzvn_login_token", "", time() - 3600, "/", "." . $_SERVER["HTTP_HOST"]);
+        header("Location: /login?speedrun=1");
+    }
+    redirect_to_home();
+}
 $error = "";
 if (post("submit")) {
     $username = post("username"); $password = post("password");
@@ -16,7 +23,7 @@ if (post("submit")) {
             if ($result == SUCCESS) {
                 $user = new Nbhzvn_User($username);
                 $user->apply_cookie();
-                header("Location: /");
+                header(get("speedrun") ? "Location: https://speedrun.nbhzvn.one" : "Location: /");
                 die();
             }
         }

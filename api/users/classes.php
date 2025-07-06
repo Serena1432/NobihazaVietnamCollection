@@ -137,8 +137,8 @@ class Nbhzvn_User {
 
     function apply_cookie() {
         $login_token = $this->update_login_token();
-        setcookie("nbhzvn_username", $this->username, time() + 2592000);
-        setcookie("nbhzvn_login_token", $login_token, time() + 2592000);
+        setcookie("nbhzvn_username", $this->username, time() + 2592000, "/", "." . $_SERVER["HTTP_HOST"]);
+        setcookie("nbhzvn_login_token", $login_token, time() + 2592000, "/", "." . $_SERVER["HTTP_HOST"]);
     }
 
     function first_verification() {
