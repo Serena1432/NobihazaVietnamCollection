@@ -6,6 +6,8 @@ require __DIR__ . "/users/cookies.php";
 
 try {
     $folder = "../uploads";
+    $types = ["zip", "rar", "7z", "jpg", "png", "webp", "jpeg", "gz", "apk", "ipa"];
+    $images = ["jpg", "png", "webp", "jpeg"];
     if (!file_exists($folder)) {
         if (!mkdir($folder, 0755, true)) api_response(null, "Có lỗi xảy ra, vui lòng thử lại.", 500);
     }
@@ -14,8 +16,6 @@ try {
             if (!$user || $user->type < 2) api_response(null, "Bạn không có quyền truy cập vào API này.", 403);
             if (post("type") == "chunk") {
                 $extension = strtolower(pathinfo("./uploads/" . basename(post("file_name")), PATHINFO_EXTENSION));
-                $types = ["zip", "rar", "7z", "jpg", "png", "webp", "jpeg", "gz"];
-                $images = ["jpg", "png", "webp", "jpeg"];
                 if (!in_array($extension, $types)) api_response(null, "Định dạng tệp tin không được hỗ trợ.", 400);
                 if (in_array($extension, $images)) $is_image = true;
                 if (!isset($_FILES["chunk"])) api_response(null, "Không có dữ liệu của tệp tin.", 400);
@@ -57,8 +57,6 @@ try {
             else {
                 if (!isset($_FILES["file"])) api_response(null, "Vui lòng chọn một tệp tin để tải lên.", 400);
                 $extension = strtolower(pathinfo("./uploads/" . basename($_FILES["file"]["name"]), PATHINFO_EXTENSION));
-                $types = ["zip", "rar", "7z", "jpg", "png", "webp", "jpeg", "gz"];
-                $images = ["jpg", "png", "webp", "jpeg"];
                 if (!in_array($extension, $types)) api_response(null, "Định dạng tệp tin không được hỗ trợ.", 400);
                 if (in_array($extension, $images)) $is_image = true;
                 $generated_name = random_string(64);
