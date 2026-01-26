@@ -5,6 +5,7 @@ require "api/games/functions.php";
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
 $parsedown->setMarkupEscaped(true);
+$parsedown->setBreaksEnabled(true);
 use Soundasleep\Html2Text;
 
 $featured_games = featured_games();

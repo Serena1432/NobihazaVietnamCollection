@@ -326,6 +326,7 @@ class Nbhzvn_Notification {
         $parsedown = new Parsedown();
         $parsedown->setSafeMode(true);
         $parsedown->setMarkupEscaped(true);
+        $parsedown->setBreaksEnabled(true);
         return '
         <div id="notification-' . $this->id . '" class="comment_container"><a href="' . $this->link . '">
             <div class="anime__review__item">

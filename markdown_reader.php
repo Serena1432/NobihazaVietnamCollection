@@ -4,6 +4,7 @@ require "api/users/cookies.php";
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
 $parsedown->setMarkupEscaped(true);
+$parsedown->setBreaksEnabled(true);
 ?>
 <!DOCTYPE html>
 <html lang="zxx">

@@ -6,6 +6,7 @@ require "api/games/functions.php";
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
 $parsedown->setMarkupEscaped(true);
+$parsedown->setBreaksEnabled(true);
 
 if (is_numeric(get("id"))) {
     $game = new Nbhzvn_Game(intval(get("id")));

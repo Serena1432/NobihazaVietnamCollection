@@ -6,6 +6,7 @@ require "api/games/functions.php";
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
 $parsedown->setMarkupEscaped(true);
+$parsedown->setBreaksEnabled(true);
 if (!$user && !get("id")) redirect_to_home();
 $profile_user = $user;
 if (get("id") && is_numeric(get("id"))) $profile_user = new Nbhzvn_User(intval(get("id")));

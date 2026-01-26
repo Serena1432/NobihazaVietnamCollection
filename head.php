@@ -2,6 +2,7 @@
 $parsedown = new Parsedown();
 $parsedown->setSafeMode(true);
 $parsedown->setMarkupEscaped(true);
+$parsedown->setBreaksEnabled(true);
 use Soundasleep\Html2Text;
 $meta_title = ($profile_user ? ($profile_user->display_name() . " ") : ($game ? ($game->name . " - ") : ($title ? ($title . " - ") : ""))) . "Nobihaza Vietnam Community Collection";
 $meta_description = $game ? explode("\n", Html2Text::convert($parsedown->text($game->description)))[0] : META_DESCRIPTION;

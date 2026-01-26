@@ -472,6 +472,7 @@ class Nbhzvn_Changelog {
         $parsedown = new Parsedown();
         $parsedown->setSafeMode(true);
         $parsedown->setMarkupEscaped(true);
+        $parsedown->setBreaksEnabled(true);
         if (!is_object($this->game_object)) $this->game_object = new Nbhzvn_Game($this->game_id);
         $game = $this->game_object;
         return '<div id="changelog-' . $this->id . '" class="comment_container"><div class="anime__review__item"><div class="anime__review__item__text"><div class="row"><div class="col-6" style="text-align: left"><h4><b>' . $this->version . '</b></h4></div><div class="col-6" style="text-align: right; font-size: 10pt; margin-top: 4px">' . timestamp_to_string($this->timestamp, true) . '</div></div><div style="font-size: 10pt" id="changelog-' . $this->id . '-content">' . $parsedown->text($this->description) . '</div>' . (($user->id == $game->uploader) ? '<p id="changelog-' . $this->id . '-options" class="comment_options"><a href="javascript:void(0)" onclick="editChangelog(' . $this->id . ')">Chỉnh sửa nội dung</a> • <a href="javascript:void(0)" onclick="deleteChangelog(' . $this->id . ')">Xoá</a></p></p>' : '') . '</div></div></div>';
