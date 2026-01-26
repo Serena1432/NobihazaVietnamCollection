@@ -11,7 +11,10 @@ $total = get_total();
                     <a href="./index.html"><img src="/img/logo.png" alt=""></a>
                 </div>
                 <?php if ($total): ?>
-                    <p style="margin-top: 10px">Hiện tại các game trên web đã có tổng cộng <?php echo number_format(intval($total->total_views), 0, ",", ".") ?> lượt xem và <?php echo number_format(intval($total->total_downloads), 0, ",", ".") ?> lượt tải. Cảm ơn các bạn rất nhiều!</p>
+                    <p style="margin-top: 10px">
+                        <b>Thống kê website hiện tại</b><br>
+                        <i class="fa fa-gamepad"></i>&nbsp; <?php echo number_format(intval($total->total_games), 0, ",", ".") ?> <span style="color: gray">•</span> <i class="fa fa-eye"></i>&nbsp; <?php echo number_format(intval($total->total_views), 0, ",", ".") ?> <span style="color: gray">•</span> <i class="fa fa-download"></i>&nbsp; <?php echo number_format(intval($total->total_downloads), 0, ",", ".") ?>
+                    </p>
                 <?php endif ?>
             </div>
             <div class="col-lg-6">

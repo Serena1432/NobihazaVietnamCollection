@@ -85,7 +85,7 @@ function pagination($item_count = 0, $items_per_page = 20, $page = 1, $distant_i
 }
 
 function get_total() {
-    $result = db_query('SELECT SUM(views) as total_views, SUM(downloads) as total_downloads FROM `nbhzvn_games` WHERE 1');
+    $result = db_query('SELECT SUM(views) as total_views, SUM(downloads) as total_downloads, COUNT(id) as total_games FROM `nbhzvn_games` WHERE 1');
     while ($row = $result->fetch_object()) return $row;
     return null;
 }
