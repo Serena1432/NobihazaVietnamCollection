@@ -141,9 +141,15 @@ async function deleteComment(id) {
 
 var originalContent = {};
 
+function safeEdit(el, text) {
+    const div = $("<div>").text(text);
+    const safeHtml = div.html().replace(/\n/g, "<br>");
+    $(el).html(safeHtml);
+}
+
 function editComment(id) {
     originalContent[id] = {
-        content: $(`#comment-${id}-content`).text(),
+        content: commentData.find(comment => comment.id == id)?.content,
         options: $(`#comment-${id}-options`).html()
     };
     $(`#comment-${id}-content`).html(`<textarea class="comment_edit_box" id="comment-${id}-editbox"></textarea>`);
@@ -153,7 +159,7 @@ function editComment(id) {
 
 function cancelCommentEdit(id) {
     if (!originalContent[id]) return;
-    $(`#comment-${id}-content`).text(originalContent[id].content);
+    safeEdit(`#comment-${id}-content`, originalContent[id].content.replace("\n", "\r\n"));
     $(`#comment-${id}-options`).html(originalContent[id].options);
     delete originalContent[id];
 }
