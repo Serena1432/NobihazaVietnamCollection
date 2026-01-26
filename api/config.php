@@ -10,5 +10,5 @@ $db_password = $_ENV["DB_PASSWORD"];
 $db_database = $_ENV["DB_DATABASE"];
 $encryption_password = $_ENV["ENCRYPTION_PASSWORD"];
 $api_version = 1;
-$res_version = "23";
+$res_version = "24";
 ?>
