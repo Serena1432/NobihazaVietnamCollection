@@ -34,7 +34,7 @@
 html,
 body {
 	height: 100%;
-	font-family: "Geologica", -apple-system, BlinkMacSystemFont, sans-serif;
+	font-family: "Reddit Sans", -apple-system, BlinkMacSystemFont, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	background: #1f2122;
 }
@@ -48,7 +48,7 @@ h6 {
 	margin: 0;
 	color: #fff;
 	font-weight: 400;
-	font-family: "Geologica", -apple-system, BlinkMacSystemFont, sans-serif;
+	font-family: "Reddit Sans", -apple-system, BlinkMacSystemFont, sans-serif;
 	margin-bottom: 10px;
 }
 
@@ -78,7 +78,7 @@ h6 {
 
 p {
 	font-size: 15px;
-	font-family: "Geologica", -apple-system, BlinkMacSystemFont, sans-serif;
+	font-family: "Reddit Sans", -apple-system, BlinkMacSystemFont, sans-serif;
 	color: #ccc;
 	font-weight: 400;
 	line-height: 25px;
@@ -129,7 +129,7 @@ ol {
 	text-transform: uppercase;
 	padding-left: 20px;
 	position: relative;
-	font-family: "Geologica", sans-serif;
+	font-family: "Reddit Sans", sans-serif;
 }
 
 .section-title h4:after,
@@ -423,7 +423,7 @@ ol {
 .hero__text h2 {
 	color: #ffffff;
 	font-size: 42px;
-	font-family: "Geologica", sans-serif;
+	font-family: "Reddit Sans", sans-serif;
 	font-weight: 700;
 	line-height: 52px;
 	margin-top: 35px;
@@ -672,7 +672,7 @@ ol {
 .product__sidebar .section-title h5 {
 	color: #ffffff;
 	font-weight: 600;
-	font-family: "Geologica", sans-serif;
+	font-family: "Reddit Sans", sans-serif;
 	line-height: 21px;
 	text-transform: uppercase;
 	padding-left: 20px;
@@ -1203,7 +1203,7 @@ ol {
 .normal__breadcrumb__text h2 {
 	color: #ffffff;
 	font-size: 48px;
-	font-family: "Geologica", sans-serif;
+	font-family: "Reddit Sans", sans-serif;
 	font-weight: 700;
 	margin-bottom: 22px;
 }
@@ -1613,7 +1613,7 @@ ol {
 .login__form h3 {
 	color: #ffffff;
 	font-weight: 700;
-	font-family: "Geologica", sans-serif;
+	font-family: "Reddit Sans", sans-serif;
 	margin-bottom: 30px;
 }
 
@@ -1757,7 +1757,7 @@ ol {
 .login__register h3 {
 	color: #ffffff;
 	font-weight: 700;
-	font-family: "Geologica", sans-serif;
+	font-family: "Reddit Sans", sans-serif;
 	margin-bottom: 30px;
 }
 
@@ -1861,7 +1861,7 @@ ol {
 .signup .login__social__links h3 {
 	color: #ffffff;
 	font-weight: 700;
-	font-family: "Geologica", sans-serif;
+	font-family: "Reddit Sans", sans-serif;
 	margin-bottom: 30px;
 }
 
