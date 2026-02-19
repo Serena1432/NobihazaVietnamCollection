@@ -102,14 +102,15 @@ View replies command
 async function viewReplies(id) {
     $(`#comment-${id}-repliesbtn`).remove();
     var response = await apiRequest({
-        url: `/api/games/comments/replies?id=${id}&html=true`,
+        url: `/api/games/comments/replies?id=${id}&include_html=true`,
         type: "GET",
         cache: false,
         contentType: false,
         processData: false
     });
     if (response?.success) {
-        $(`#comment-${id}-replies`).html(response.data);
+        $(`#comment-${id}-replies`).html(response.data.html);
+        commentData = commentData.concat(response.data.list);
         delete replying[id];
     }
 }

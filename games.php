@@ -406,7 +406,7 @@ else $repo = all_games();
         <?php endif ?>
         <?php if ($comments && count($comments)): ?>
         <script>
-            let commentData = JSON.parse(Base64.decode(`<?= base64_encode(json_encode($comments)) ?>`));
+            let commentData = JSON.parse(Base64.decode(`<?= base64_encode(json_encode(array_merge($comments, $highlighted_comment->fetch_replies()))) ?>`));
         </script>
         <?php endif ?>
 
