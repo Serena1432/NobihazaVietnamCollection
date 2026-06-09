@@ -27,6 +27,7 @@
 **/._*
 
 .env
+vendor/
 
 # Ignore upload folder
 uploads/
