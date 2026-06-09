@@ -2,9 +2,17 @@
 
 ![Screenshot](screenshot.png)
 
+*(\*) The screenshot above was taken from a development version. The overall design may not be final.*
+
 **Nobihaza Vietnam Community Collection** website ([nbhzvn.one](https://nbhzvn.one))'s official source code repository, used as a "game storage" website to upload and manage various Nobihaza games for ease of downloading, searching, and even linking to a chatbot.
 
 This website uses PHP for backend, and MySQL for database management.
+
+## LICENSE UPDATE
+
+Please note that starting with our upcoming beta release, this website no longer incorporates any designs from Colorlib. As a result, the codebase is no longer bound by Colorlib's licensing terms. Once this update goes live, the source code will be fully licensed under the MIT License.
+
+The beta branch containing these changes and the new license will be merged into the main branch upon the completion of development and testing.
 
 ## Requirements
 
