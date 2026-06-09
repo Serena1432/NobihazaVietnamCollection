@@ -11,20 +11,20 @@ class Modal {
         this.id = `modal-${randomId(16)}`;
         this.title = title || "Thông báo";
         this.body = body;
-        this.footer = `<button type="button" class="btn btn-secondary" data-dismiss="modal">OK</button>`;
+        this.footer = `<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">OK</button>`;
         this.element = null;
         this.createElement();
     }
     html() {
         return `
             <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
+                <div class="modal-content bg-dark text-white border-secondary">
+                    <div class="modal-header border-secondary">
                         <h4 class="modal-title">${this.title}</h4>
-                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">${this.body}</div>
-                    <div class="modal-footer">${this.footer}</div>
+                    <div class="modal-footer border-secondary">${this.footer}</div>
                 </div>
             </div>
         `;

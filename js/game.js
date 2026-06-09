@@ -5,8 +5,8 @@ Rating icon hovering mechanics
 */
 
 function highlightStars(cursor) {
-    for (var i = 1; i <= cursor; i++) $(`#star-${i}`).attr("class", "fa fa-star");
-    for (var i = cursor + 1; i <= 5; i++) $(`#star-${i}`).attr("class", "fa fa-star-o");
+    for (var i = 1; i <= cursor; i++) $(`#star-${i}`).attr("class", "bi bi-star-fill");
+    for (var i = cursor + 1; i <= 5; i++) $(`#star-${i}`).attr("class", "bi bi-star");
 }
 
 function unhighlightStars() {
@@ -153,9 +153,9 @@ function editComment(id) {
         content: commentData.find(comment => comment.id == id)?.content,
         options: $(`#comment-${id}-options`).html()
     };
-    $(`#comment-${id}-content`).html(`<textarea class="comment_edit_box" id="comment-${id}-editbox"></textarea>`);
+    $(`#comment-${id}-content`).html(`<textarea class="form-control bg-dark text-white border-secondary mb-2 mt-2" rows="2" id="comment-${id}-editbox"></textarea>`);
     $(`#comment-${id}-editbox`).val(originalContent[id].content);
-    $(`#comment-${id}-options`).html(`<a href="javascript:void(0)" onclick="processCommentEdit(${id})">Chỉnh sửa</a> • <a href="javascript:void(0)" onclick="cancelCommentEdit(${id})">Huỷ</a>`);
+    $(`#comment-${id}-options`).html(`<a href="javascript:void(0)" onclick="processCommentEdit(${id})" class="btn btn-primary btn-sm me-2"><i class="bi bi-check"></i> Lưu lại</a> • <a href="javascript:void(0)" onclick="cancelCommentEdit(${id})" class="btn btn-secondary btn-sm"><i class="bi bi-x"></i> Huỷ</a>`);
 }
 
 function cancelCommentEdit(id) {
@@ -267,7 +267,7 @@ async function rate(id, rating) {
     if ($("#star-1").attr("data-rated")) return;
     modal.title = `Đánh Giá Game`;
     modal.body = `
-        <p>Ghi rõ lý do tại sao bạn lại đánh giá ${rating} sao cho game <b>${$("#gameTitle > h3").text()}:</p>
+        <p>Ghi rõ lý do tại sao bạn lại đánh giá ${rating} sao cho game <b>${$("#gameTitle").text()}:</p>
         <div class="anime__details__form">
             <textarea id="ratingReason" style="height: 300px"></textarea>
         </div>
@@ -282,7 +282,7 @@ async function rate(id, rating) {
 
 function updateReason(id, rating, reason) {
     modal.body = `
-        <p>Ghi rõ lý do tại sao bạn lại đánh giá ${rating} sao cho game <b>${$("#gameTitle > h3").text()}:</p>
+        <p>Ghi rõ lý do tại sao bạn lại đánh giá ${rating} sao cho game <b>${$("#gameTitle").text()}:</p>
         <div class="anime__details__form">
             <textarea id="ratingReason" style="height: 300px">${reason}</textarea>
         </div>
@@ -320,15 +320,15 @@ async function processRate(id, rating) {
                 full = Math.floor(average), remain = average - full, index = 0, ostar = 4 - full, html = "";
             for (var i = 0; i < full; i++) {
                 index++;
-                html += `<a href="javascript:void(0)"><i data-rated="true" id="star-${i}" class="fa fa-star"></i></a> `;
+                html += `<a href="javascript:void(0)"><i data-rated="true" id="star-${i}" class="bi bi-star-fill"></i></a> `;
             }
             if (index < 5) {
                 index++;
-                html += `<a href="javascript:void(0)"><i data-rated="true" id="star-${i}" class="fa fa-star${(remain >= 0.5) ? "-half" : ""}-o"></i></a> `;
+                html += `<a href="javascript:void(0)"><i data-rated="true" id="star-${i}" class="bi bi-star-fill${(remain >= 0.5) ? "-half" : ""}-o"></i></a> `;
             }
             for (var i = 0; i < ostar; i++) {
                 index++;
-                html += `<a href="javascript:void(0)"><i data-rated="true" id="star-${i}" class="fa fa-star-o"></i></a> `;
+                html += `<a href="javascript:void(0)"><i data-rated="true" id="star-${i}" class="bi bi-star"></i></a> `;
             }
             $("#rating").html(html);
             $(`#ratingText`).text(`${response.data.total} lượt đánh giá`);

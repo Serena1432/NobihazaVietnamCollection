@@ -93,8 +93,8 @@ function createGameFileElement(id, file) {
             </div>
             <div class="col-md-4 col-lg-4">
                 <div id="gameFileDisplay-${id}" style="display: flex; flex-direction: row; text-align: right">
-                    <div class="progressbar_container" id="gameFileProgressBar-${id}" style="width: 80%">
-                        <div class="progressbar"></div>
+                    <div class="progress mt-2" id="gameFileProgressBar-${id}" style="width: 80%">
+                        <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
                     </div>
                     <button type="button" onclick="deleteGameFile('${id}')" class="upload_close_btn">X</button>
                 </div>
@@ -216,8 +216,8 @@ function createBetaGameFileElement(id, file) {
             </div>
             <div class="col-md-4 col-lg-4">
                 <div id="betaGameFileDisplay-${id}" style="display: flex; flex-direction: row; text-align: right">
-                    <div class="progressbar_container" id="betaGameFileProgressBar-${id}" style="width: 80%">
-                        <div class="progressbar"></div>
+                    <div class="progress mt-2" id="betaGameFileProgressBar-${id}" style="width: 80%">
+                        <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
                     </div>
                     <button type="button" onclick="deleteBetaGameFile('${id}')" class="upload_close_btn">X</button>
                 </div>
@@ -286,20 +286,20 @@ var modal = new Modal();
 function addBetaUser() {
     modal.title = `Thêm Tester`;
     modal.body = `
-        <div class="login__form page">
-            <p>Hãy tìm kiếm tên của thành viên bạn muốn thêm:</p>
+        <div class="p-2">
+            <p class="text-muted">Hãy tìm kiếm tên của thành viên bạn muốn thêm:</p>
             <form action="" onsubmit="search(); return false">
-                <div class="input__item" style="width: 100%">
-                    <input type="text" id="query" placeholder="Tìm Kiếm Thành Viên">
-                    <span class="icon_profile"></span>
+                <div class="input-group mb-3">
+                    <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-person"></i></span>
+                    <input type="text" class="form-control bg-dark border-secondary text-white" id="query" placeholder="Tìm Kiếm Thành Viên">
+                    <button type="button" class="btn btn-primary" onclick="search()"><i class="bi bi-search"></i></button>
                 </div>
-                <button type="button" class="site-btn" onclick="search()">Tìm kiếm</button>
             </form>
-            <div style="padding: 10px; margin-top: 10px" id="members"></div>
+            <div id="members" class="mt-3"></div>
         </div>
     `;
     modal.footer = `
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy bỏ</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy bỏ</button>
     `;
     modal.update();
     modal.show();
@@ -318,13 +318,13 @@ async function search() {
     });
     if (response?.success) $("#members").html(response.data.length ? response.data.map(user => {
         return `
-            <div class="transfer_member">
+            <div class="d-flex justify-content-between align-items-center mb-3 p-3 bg-dark border border-secondary rounded">
                 <div>
-                    <h4>${user.display_name || user.username}</h4>
-                    <p><b>ID:</b> ${user.id}</p>
+                    <h5 class="mb-1 text-white">${user.display_name || user.username}</h5>
+                    <p class="mb-0 text-muted small"><b>ID:</b> ${user.id}</p>
                 </div>
                 <div>
-                    <button onclick="processAddBetaUser(${user.id}, '${user.display_name || user.username}')"><i class="fa fa-check"></i></button>
+                    <button class="btn btn-primary" onclick="processAddBetaUser(${user.id}, '${user.display_name || user.username}')"><i class="bi bi-check-lg"></i></button>
                 </div>
             </div>
         `;
@@ -437,8 +437,8 @@ function createScreenshotElement(id) {
     div.innerHTML = `
         <div style="text-align: right"><button type="button" onclick="deleteScreenshot('${id}')" class="upload_close_btn">X</button></div>
         <div id="screenshotContent-${id}" style="margin-top: 5px">
-            <div class="progressbar_container" id="screenshotProgressBar-${id}">
-                <div class="progressbar"></div>
+            <div class="progress mt-2" id="screenshotProgressBar-${id}">
+                <div class="progress-bar bg-primary progress-bar-striped progress-bar-animated" role="progressbar" style="width: 0%"></div>
             </div>
         </div>
     `;

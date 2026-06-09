@@ -384,11 +384,40 @@ class Nbhzvn_Comment {
         }
         $options = [];
         if (!$hide_options) {
-            if ($user->id == $this->author) array_push($options, '<a href="javascript:void(0)" onclick="editComment(' . $this->id . ')">Chỉnh sửa</a>');
-            if ($user->id == $this->author || $user->type == 3) array_push($options, '<a href="javascript:void(0)" onclick="deleteComment(' . $this->id . ')">Xoá</a>');
-            if ($user->id) array_push($options, '<a href="javascript:void(0)" onclick="replyComment(' . ($this->replied_to ? $this->replied_to : $this->id) . ', ' . ($this->replied_to ? ('\'' . $this_author->username . '\'') : "null") . ')">Trả lời</a>');
+            if ($user->id == $this->author) array_push($options, '<a href="javascript:void(0)" class="text-info text-decoration-none small me-3" onclick="editComment(' . $this->id . ')"><i class="bi bi-pencil"></i> Chỉnh sửa</a>');
+            if ($user->id) array_push($options, '<a href="javascript:void(0)" class="text-success text-decoration-none small me-3" onclick="replyComment(' . ($this->replied_to ? $this->replied_to : $this->id) . ', ' . ($this->replied_to ? ('\'' . $this_author->username . '\'') : "null") . ')"><i class="bi bi-reply"></i> Trả lời</a>');
+            if ($user->id == $this->author || $user->type == 3) array_push($options, '<a href="javascript:void(0)" class="text-danger text-decoration-none small" onclick="deleteComment(' . $this->id . ')"><i class="bi bi-trash"></i> Xoá</a>');
         }
-        return '<div id="comment-' . $this->id . '" class="comment_container"><div class="anime__review__item"><div class="anime__review__item__text' . ($is_reply ? " reply" : "") . '"><h6><a href="/profile/' . $this->author . '">' . $this_author->display_name() . '</a>' . $this_author->badge_html(($this_game->uploader == $this_author->id)) . ' • <a href="/games/' . $this->game_id . ($this->replied_to ? ('?highlighted_comment=' . $this->replied_to . '&reply_comment=' . $this->id . '#comment-' . $this->id) : ('?highlighted_comment=' . $this->id . '#comment-' . $this->id)) . '"><span style="font-size: 10pt">' . comment_time($this->timestamp) . ($this->edited ? " (đã chỉnh sửa)" : "") . (($highlighted == $this->id) ? '<span class="highlighted_comment">Bình luận nổi bật</span>' : "") . '</span></a></h6><p id="comment-' . $this->id . '-content">' . process_mentions($this->content) . '</p>' . (count($options) ? ('<p id="comment-' . $this->id . '-options" class="comment_options">' . implode(" • ", $options) . '</p>') : "") . '</div><div id="comment-' . $this->id . '-replies" class="comment_replies">' . $pre_reply_html . '</div>' . (($replies > 0 && !$hide_options) ? '<div class="view_replies_btn" id="comment-' . $this->id . '-repliesbtn"><a href="javascript:void(0)" onclick="viewReplies(' . $this->id . ')">Xem ' . $replies . ' câu trả lời...</a></div>' : "") . '</div></div>';
+        
+        $avatar = $this_author->avatar_url;
+        $badge = "";
+        if ($this_game->uploader == $this_author->id) {
+            $badge = ' <span class="badge bg-success ms-2 rounded-pill small">Uploader</span>';
+        } else if ($this_author->type == 3) {
+            $badge = ' <span class="badge bg-primary ms-2 rounded-pill small">Quản trị viên</span>';
+        }
+        
+        $highlight_class = ($highlighted == $this->id) ? ' bg-dark border-primary' : '';
+        $highlight_text = ($highlighted == $this->id) ? ' <span class="badge bg-secondary ms-2 small">Bình luận nổi bật</span>' : '';
+        $edited_text = $this->edited ? ' (đã chỉnh sửa)' : '';
+        
+        $html = '<div id="comment-' . $this->id . '" class="comment_container d-flex mb-4 pb-3' . ($is_reply ? '' : ' border-bottom border-dark') . $highlight_class . '" style="' . ($is_reply ? 'margin-left: 40px; margin-bottom: 10px !important; padding-bottom: 5px !important;' : '') . '">';
+        $html .= '<img src="' . $avatar . '" class="rounded-circle me-3 border border-secondary" width="50" height="50" style="object-fit: cover;" alt="Avatar">';
+        $html .= '<div class="w-100">';
+        $html .= '<h6 class="fw-bold mb-1' . ($this_game->uploader == $this_author->id ? ' text-success' : ($this_author->type == 3 ? ' text-primary' : ' text-white')) . '"><a href="/profile/' . $this->author . '" class="text-decoration-none text-inherit">' . $this_author->display_name() . '</a>' . $badge . ' <span class="text-muted small fw-normal ms-2"><a href="/games/' . $this->game_id . ($this->replied_to ? ('?highlighted_comment=' . $this->replied_to . '&reply_comment=' . $this->id . '#comment-' . $this->id) : ('?highlighted_comment=' . $this->id . '#comment-' . $this->id)) . '" class="text-muted text-decoration-none">' . comment_time($this->timestamp) . $edited_text . '</a>' . $highlight_text . '</span></h6>';
+        $html .= '<div id="comment-' . $this->id . '-content" class="mb-2 text-light">' . process_mentions($this->content) . '</div>';
+        
+        if (count($options) > 0) {
+            $html .= '<div id="comment-' . $this->id . '-options" class="mb-2">' . implode("", $options) . '</div>';
+        }
+        
+        $html .= '<div id="comment-' . $this->id . '-replies" class="comment_replies w-100">' . $pre_reply_html . '</div>';
+        if ($replies > 0 && !$hide_options) {
+            $html .= '<div class="view_replies_btn mt-2" id="comment-' . $this->id . '-repliesbtn"><a href="javascript:void(0)" class="text-decoration-none fw-bold" onclick="viewReplies(' . $this->id . ')"><i class="bi bi-chevron-down"></i> Xem ' . $replies . ' câu trả lời...</a></div>';
+        }
+        $html .= '</div></div>';
+        
+        return $html;
     }
 }
 
@@ -425,11 +454,28 @@ class Nbhzvn_Rating {
 
     function to_html($user = new Nbhzvn_User(0)) {
         $stars = "";
-        for ($i = 0; $i < $this->rating; $i++) $stars .= '<i class="fa fa-star"></i>';
-        for ($i = 0; $i < 5 - $this->rating; $i++) $stars .= '<i class="fa fa-star-o"></i>';
+        for ($i = 0; $i < $this->rating; $i++) $stars .= '<i class="bi bi-star-fill"></i> ';
+        for ($i = 0; $i < 5 - $this->rating; $i++) $stars .= '<i class="bi bi-star"></i> ';
         $reason = htmlentities($this->reason ? $this->reason : "");
         if (!$reason) $reason = '<i>Thành viên này không để lại lý do nào' . (($this->timestamp < 1740576333) ? ', vì đánh giá này được thực hiện trước thời gian website yêu cầu thành viên phải ghi lý do' : ''). '.</i>';
-        return '<div id="rating-' . $this->id . '" class="comment_container"><div class="anime__review__item"><div class="anime__review__item__text"><h6><a href="' . ($user->type < 3 ? 'javascript:void(0)' : ('/profile/' . $this->user->id)) . '">' . ($user->type < 3 ? $this->author : $this->user->display_name()) . '</a> • <span class="rating_stars">' . $stars . '</span> • <span style="font-size: 10pt">' . comment_time($this->timestamp) . '</span></h6><p style="font-size: 10pt; margin-top: 5px">' . $reason . '</p>' . ($user->type == 3 ? ('<p class="comment_options"><a href="javascript:void(0)" onclick=\'deleteRating(' . $this->id . ')\'>Xoá đánh giá này</a></p>') : '') . '</div></div></div>';
+        
+        $author_name = $user->type < 3 ? $this->author : $this->user->display_name();
+        $author_link = $user->type < 3 ? 'javascript:void(0)' : ('/profile/' . $this->user->id);
+        $avatar = $this->user->avatar_url;
+        
+        $html = '<div id="rating-' . $this->id . '" class="d-flex mb-4 border-bottom border-dark pb-3">';
+        $html .= '<img src="' . $avatar . '" class="rounded-circle me-3 border border-secondary" width="50" height="50" style="object-fit: cover;" alt="Avatar">';
+        $html .= '<div class="w-100">';
+        $html .= '<div class="d-flex justify-content-between align-items-center mb-1">';
+        $html .= '<h6 class="fw-bold mb-0"><a href="' . $author_link . '" class="text-white text-decoration-none">' . $author_name . '</a> <span class="text-muted small fw-normal ms-2">' . comment_time($this->timestamp) . '</span></h6>';
+        $html .= '<div class="text-warning small">' . $stars . '</div>';
+        $html .= '</div>';
+        $html .= '<p class="mb-1 text-light">' . $reason . '</p>';
+        if ($user->type == 3) {
+            $html .= '<div class="text-end"><a href="javascript:void(0)" class="text-danger text-decoration-none small" onclick="deleteRating(' . $this->id . ')"><i class="bi bi-trash"></i> Xóa</a></div>';
+        }
+        $html .= '</div></div>';
+        return $html;
     }
 }
 
@@ -468,14 +514,25 @@ class Nbhzvn_Changelog {
         $this->game_object = $game;
     }
 
-    function to_html($user) {
+    function to_html($user, $primary = false) {
         $parsedown = new Parsedown();
         $parsedown->setSafeMode(true);
         $parsedown->setMarkupEscaped(true);
         $parsedown->setBreaksEnabled(true);
         if (!is_object($this->game_object)) $this->game_object = new Nbhzvn_Game($this->game_id);
         $game = $this->game_object;
-        return '<div id="changelog-' . $this->id . '" class="comment_container"><div class="anime__review__item"><div class="anime__review__item__text"><div class="row"><div class="col-6" style="text-align: left"><h4><b>' . $this->version . '</b></h4></div><div class="col-6" style="text-align: right; font-size: 10pt; margin-top: 4px">' . timestamp_to_string($this->timestamp, true) . '</div></div><div style="font-size: 10pt" id="changelog-' . $this->id . '-content">' . $parsedown->text($this->description) . '</div>' . (($user->id == $game->uploader) ? '<p id="changelog-' . $this->id . '-options" class="comment_options"><a href="javascript:void(0)" onclick="editChangelog(' . $this->id . ')">Chỉnh sửa nội dung</a> • <a href="javascript:void(0)" onclick="deleteChangelog(' . $this->id . ')">Xoá</a></p></p>' : '') . '</div></div></div>';
+        return '
+        <div class="mb-3" id="changelog-' . $this->id . '">
+            <div class="d-flex justify-content-between align-items-center">
+                <span class="badge bg-' . ($primary ? "primary" : "secondary") . ' fs-6">' . $this->version . '</span>
+                <span class="text-muted small">' . timestamp_to_string($this->timestamp, true) . '</span>
+            </div>
+            <div id="changelog-' . $this->id . '-content" class="mt-2 text-muted">
+                ' . $parsedown->text($this->description) . '
+            </div>
+            ' . (($user->id == $game->uploader) ? '<div id="changelog-' . $this->id . '-options" class="mt-2"><a href="javascript:void(0)" class="text-decoration-none small me-3" onclick="editChangelog(' . $this->id . ')"><i class="bi bi-pencil"></i> Chỉnh sửa</a><a href="javascript:void(0)" class="text-danger text-decoration-none small" onclick="deleteChangelog(' . $this->id . ')"><i class="bi bi-trash"></i> Xoá</a></div>' : '') . '
+        </div>
+        ';
     }
 }
 ?>

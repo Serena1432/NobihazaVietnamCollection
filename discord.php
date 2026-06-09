@@ -124,87 +124,88 @@ else {
 refresh_csrf();
 ?>
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html lang="vi">
 <head>
     <?php
         $title = "Kết Nối Với Discord";
         require __DIR__ . "/head.php";
     ?>
 </head>
-
 <body>
-    <!-- Header Section Begin -->
-    <header class="header">
-        <?php require "header.php"; ?>
-    </header>
-    <!-- Header End -->
-
-    <!-- Normal Breadcrumb Begin -->
-    <section class="normal-breadcrumb set-bg" data-setbg="/img/normal-breadcrumb.jpg">
-    </section>
-    <!-- Normal Breadcrumb End -->
-
-    <!-- Signup Section Begin -->
-    <section class="signup spad">
-        <div class="container">
-            <div class="login__form page">
-                <h3>Kết Nối Với Discord</h3>
+<div class="app-container">
+    <?php require 'sidebar.php'; ?>
+    <div class="main-content">
+        <?php require "mobile-top-nav.php" ?>
+        <div class="normal-hero"></div>
+        <div class="m-3 mt-4">
+            <div class="card-dark p-4 shadow-lg" style="max-width: 1080px; margin: auto">
+                <h4 class="fw-bold mb-4">Kết Nối Với Discord</h4>
                 <?php if ($fatal_error): ?>
-                <p><?php echo $fatal_error ?></p>
-                <p><a href="/"><button class="site-btn">Về Trang Chủ</button></p>
+                    <div class="alert alert-dark text-white border-secondary" role="alert">
+                        <?php echo $fatal_error ?>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="/" class="btn btn-primary fw-bold">Về Trang Chủ</a>
+                    </div>
                 <?php else: ?>
-                <p>Tài khoản Discord của bạn chưa liên kết với tài khoản nào của trang web. Tuy nhiên thì bạn có thể đăng ký một tài khoản mới bằng biểu mẫu ở bên dưới, và liên kết với tài khoản Discord của bạn ngay sau đó.</p>
-                <form action="" method="POST">
-                    <p><input type="radio" name="type" value="1" id="radio1" onclick="updateRadio()"> <label>Đặt theo tên đăng nhập trên Discord của bạn (<b><?php echo $discord_user->username ?></b>)</label></input></p>
-                    <p><input type="radio" name="type" value="2" id="radio2" onclick="updateRadio()" checked> <label>Chọn tên đăng nhập khác:</label></input></p>
-                    <div class="input__item" style="width: 100%">
-                        <input type="username" name="username" placeholder="Tên Đăng Nhập" id="username" onclick="setRadio()">
-                        <span class="icon_profile"></span>
+                    <p class="text-muted mb-4">Tài khoản Discord của bạn chưa liên kết với tài khoản nào của trang web. Tuy nhiên thì bạn có thể đăng ký một tài khoản mới bằng biểu mẫu ở bên dưới, và liên kết với tài khoản Discord của bạn ngay sau đó.</p>
+                    <form action="" method="POST">
+                        <div class="form-check mb-2">
+                            <input class="form-check-input bg-dark border-secondary" type="radio" name="type" value="1" id="radio1" onclick="updateRadio()">
+                            <label class="form-check-label text-white" for="radio1">
+                                Đặt theo tên đăng nhập trên Discord của bạn (<b><?php echo $discord_user->username ?></b>)
+                            </label>
+                        </div>
+                        <div class="form-check mb-4">
+                            <input class="form-check-input bg-dark border-secondary" type="radio" name="type" value="2" id="radio2" onclick="updateRadio()" checked>
+                            <label class="form-check-label text-white" for="radio2">
+                                Chọn tên đăng nhập khác:
+                            </label>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-muted"><b>Tên Người Dùng</b></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-person"></i></span>
+                                <input type="text" class="form-control bg-dark border-secondary text-white" name="username" id="username" placeholder="Tên Đăng Nhập" onclick="setRadio()">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label text-muted"><b>Mật Khẩu</b></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-lock"></i></span>
+                                <input type="password" class="form-control bg-dark border-secondary text-white" name="password" placeholder="Mật Khẩu" required>
+                            </div>
+                        </div>
+                        
+                        <input type="hidden" name="csrf_token" value="<?php echo get_csrf(); ?>" />
+                        <?php if ($error) echo '<p class="text-danger fst-italic">' . $error . '</p>'; ?>
+                        <button type="submit" name="submit" value="Submit" class="btn btn-primary w-100 py-2 fw-bold mb-3 mt-2">Đăng Ký</button>
+                    </form>
+                    
+                    <div class="mt-4 pt-3 border-top border-secondary text-muted small">
+                        <p><i>Để liên kết tài khoản Discord này với tài khoản có sẵn, hãy đăng nhập vào tài khoản đó trước và vào phần <b>Thay đổi thông tin -> Liên kết tài khoản Discord</b>.</i></p>
                     </div>
-                    <div class="input__item" style="width: 100%">
-                        <input type="password" name="password" placeholder="Mật Khẩu" required>
-                        <span class="icon_lock"></span>
-                    </div>
-                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf(); ?>" />
-                    <p style="color: #e36666"><i><?php echo $error ?></i></p>
-                    <button type="submit" name="submit" class="site-btn" value="Submit">Đăng Ký</button>
-                </form><br>
-                <p><i>Để liên kết tài khoản Discord này với tài khoản có sẵn, hãy đăng nhập vào tài khoản đó trước và vào phần <b>Thay đổi thông tin -> Liên kết tài khoản Discord</b>.</i></p>
                 <?php endif ?>
             </div>
         </div>
-    </section>
-    <!-- Signup Section End -->
+        <?php require 'footer.php'; ?>
+    </div>
+</div>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/main.js"></script>
+<script>
+    function setRadio() {
+        document.getElementById("radio1").checked = false;
+        document.getElementById("radio2").checked = true;
+        updateRadio();
+    }
 
-    <!-- Footer Section Begin -->
-    <footer class="footer">
-        <?php require "footer.php" ?>
-      </footer>
-      <!-- Footer Section End -->
-
-    <!-- Js Plugins -->
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/js/base64.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/mixitup.min.js"></script>
-    <script src="/js/jquery.slicknav.js"></script>
-    <script src="/js/owl.carousel.min.js"></script>
-    <script src="/js/main.js?v=<?=$res_version?>"></script>
-
-    <script>
-        function setRadio() {
-            document.getElementById("radio1").checked = false;
-            document.getElementById("radio2").checked = true;
-            updateRadio();
-        }
-
-        function updateRadio() {
-            if (document.getElementById("radio1").checked) document.getElementById("username").disabled = true;
-            else document.getElementById("username").disabled = false;
-        }
-    </script>
-
+    function updateRadio() {
+        if (document.getElementById("radio1").checked) document.getElementById("username").disabled = true;
+        else document.getElementById("username").disabled = false;
+    }
+</script>
 </body>
-
 </html>

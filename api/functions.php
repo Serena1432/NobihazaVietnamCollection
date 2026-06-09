@@ -75,11 +75,13 @@ function pagination($item_count = 0, $items_per_page = 20, $page = 1, $distant_i
     $pages = ceil($item_count / $items_per_page);
     if ($item_count == 0 || $pages < 2) return "";
     echo '
-        <div id="pagination' . $distant_id . '" class="nbhzvn_pagination">
-            <button class="previous" onclick="previousPage(\'' . $distant_id . '\')">&lt; Trang trước</button>
-            <input id="currentPage' . $distant_id . '" class="current_page" type="number" value="' . $page . '" onblur="jumpToPage(\'' . $distant_id . '\')" max="' . $pages . '">
-            <button class="pages_count"> / ' . $pages . '</button>
-            <button class="next" onclick="nextPage(\'' . $distant_id . '\')">Trang sau &gt;</button>
+        <div id="pagination' . $distant_id . '" class="d-flex justify-content-center align-items-center mt-4 mb-2">
+            <button class="btn btn-outline-primary btn-sm me-2" onclick="previousPage(\'' . $distant_id . '\')"><i class="bi bi-chevron-left"></i> Trang trước</button>
+            <div class="input-group input-group-sm" style="width: auto;">
+                <input id="currentPage' . $distant_id . '" class="form-control bg-dark text-white border-primary text-center shadow-none" style="max-width: 60px;" type="number" value="' . $page . '" onblur="jumpToPage(\'' . $distant_id . '\')" max="' . $pages . '" min="1">
+                <span class="input-group-text bg-dark text-white border-primary">/ ' . $pages . '</span>
+            </div>
+            <button class="btn btn-outline-primary btn-sm ms-2" onclick="nextPage(\'' . $distant_id . '\')">Trang sau <i class="bi bi-chevron-right"></i></button>
         </div>
     ';
 }
@@ -88,6 +90,29 @@ function get_total() {
     $result = db_query('SELECT SUM(views) as total_views, SUM(downloads) as total_downloads, COUNT(id) as total_games FROM `nbhzvn_games` WHERE 1');
     while ($row = $result->fetch_object()) return $row;
     return null;
+}
+
+function user_agent() {
+    $user_agent = $_SERVER['HTTP_USER_AGENT'] ?? '';
+    if (empty($user_agent)) {
+        return 'Unknown';
+    }
+    $os_array = [
+        '/windows|win32|win98|win95|win16/i' => 'Windows',
+        '/iphone|ipad|ipod/i'                => 'iOS',
+        '/macintosh|mac os x|mac_powerpc/i'  => 'macOS',
+        '/android/i'                         => 'Android',
+        '/ubuntu/i'                          => 'Linux',
+        '/linux/i'                           => 'Linux',
+        '/blackberry/i'                      => 'BlackBerry',
+        '/webos/i'                           => 'WebOS'
+    ];
+    foreach ($os_array as $regex => $os) {
+        if (preg_match($regex, $user_agent)) {
+            return $os;
+        }
+    }
+    return 'Unknown';
 }
 
 // Update views_today

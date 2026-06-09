@@ -28,11 +28,11 @@ if (post("submit")) {
                     break;
                 }
                 case USERNAME_ALREADY_EXISTS: {
-                    $error = "Tên đăng nhập đã tồn tại.";
+                    $error = "Tên đăng nhập không hợp lệ.";
                     break;
                 }
                 case EMAIL_ALREADY_EXISTS: {
-                    $error = "Email này đã tồn tại.";
+                    $error = "Email này không được hỗ trợ.";
                     break;
                 }
                 default: {
@@ -46,85 +46,69 @@ if (post("submit")) {
 refresh_csrf();
 ?>
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html lang="vi">
 <head>
     <?php
         $title = "Đăng Ký Tài Khoản";
-        require __DIR__ . "/head.php";
+        require "head.php";
     ?>
 </head>
-
 <body>
-    <!-- Header Section Begin -->
-    <header class="header">
-        <?php require "header.php"; ?>
-    </header>
-    <!-- Header End -->
-
-    <!-- Normal Breadcrumb Begin -->
-    <section class="normal-breadcrumb set-bg" data-setbg="/img/normal-breadcrumb.jpg">
-    </section>
-    <!-- Normal Breadcrumb End -->
-
-    <!-- Signup Section Begin -->
-    <section class="signup spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="login__form">
-                        <h3>Đăng Ký</h3>
-                        <form action="" method="POST">
-                            <div class="input__item">
-                                <input type="text" name="username" placeholder="Tên Người Dùng" required>
-                                <span class="icon_profile"></span>
-                            </div>
-                            <div class="input__item">
-                                <input type="email" name="email" placeholder="Địa Chỉ Email" required>
-                                <span class="icon_mail"></span>
-                            </div>
-                            <div class="input__item">
-                                <input type="password" name="password" placeholder="Mật Khẩu" required>
-                                <span class="icon_lock"></span>
-                            </div>
-                            <input type="hidden" name="csrf_token" value="<?php echo get_csrf(); ?>" />
-                            <p style="color: #e36666"><i><?php echo $error ?></i></p>
-                            <button type="submit" name="submit" class="site-btn" value="Submit">Đăng Ký</button>
-                        </form>
-                        <br>
-                        <p><i>Website sẽ chỉ sử dụng Địa Chỉ Email của bạn để xác nhận tài khoản và khi lấy lại mật khẩu, ngoài ra email của bạn sẽ không được sử dụng cho bất kì hành động nào khác của website.<br>Chỉ hỗ trợ email đến từ Gmail, Yahoo! Mail hoặc Outlook.</i></p>
-                        <p><small>Bằng cách tiếp tục sử dụng trang web này, bạn đã đồng ý với <a href="/tos">Điều Khoản Sử Dụng</a> và <a href="/privacy_policy">Chính Sách Bảo Mật</a> của trang web.</small></p>
-                        <h5>Đã có tài khoản? <a href="/login">Đăng Nhập</a></h5>
+<div class="app-container">
+    <?php require 'sidebar.php'; ?>
+    <div class="main-content">
+        <?php require "mobile-top-nav.php" ?>
+        <div class="normal-hero"></div>
+        <div class="m-3 mt-4">
+            <div class="card-dark p-4 shadow-lg" style="max-width: 1080px; margin: auto">
+                <h4 class="fw-bold mb-4">Đăng Ký Tài Khoản</h4>
+                <p class="text-muted">Đăng ký tài khoản tại Nobihaza Vietnam Community Collection để có thể theo dõi, bình luận và đánh giá game mà bạn thích.</p>
+                <form action="" method="POST">
+                    <div class="mb-3">
+                        <label class="form-label text-muted"><b>Tên Người Dùng</b></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-person"></i></span>
+                            <input type="text" class="form-control bg-dark border-secondary text-white" name="username" required>
+                        </div>
                     </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted"><b>Địa Chỉ Email</b></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-envelope"></i></span>
+                            <input type="email" class="form-control bg-dark border-secondary text-white" name="email" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label text-muted"><b>Mật Khẩu</b></label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-lock"></i></span>
+                            <input type="password" class="form-control bg-dark border-secondary text-white" name="password" required>
+                        </div>
+                    </div>
+                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf(); ?>" />
+                    <?php if ($error) echo '<p class="text-danger fst-italic">' . $error . '</p>'; ?>
+                    <button type="submit" name="submit" value="Submit" class="btn btn-primary w-100 py-2 fw-bold mb-3">Đăng Ký</button>
+                </form>
+                
+                <div class="mb-4 text-muted small">
+                    <p><i>Website sẽ chỉ sử dụng Địa Chỉ Email của bạn để xác nhận tài khoản và khi lấy lại mật khẩu, ngoài ra email của bạn sẽ không được sử dụng cho bất kì hành động nào khác của website.<br>Chỉ hỗ trợ email đến từ Gmail, Yahoo! Mail hoặc Outlook.</i></p>
+                    <p>Bằng cách tiếp tục sử dụng trang web này, bạn đã đồng ý với <a href="/tos" class="text-primary text-decoration-none">Điều Khoản Sử Dụng</a> và <a href="/privacy_policy" class="text-primary text-decoration-none">Chính Sách Bảo Mật</a> của trang web.</p>
                 </div>
-                <div class="col-lg-6">
-                    <div class="login__social__links">
-                        <h3>Đăng Ký Bằng Mạng Xã Hội</h3>
-                        <ul>
-                            <li><a href="/discord" class="discord">Đăng Ký Bằng Discord</a></li>
-                        </ul>
-                    </div>
+                
+                <div>
+                    <a href="/discord"><button class="btn btn-discord w-100 py-2 fw-bold mb-3">Đăng Ký Bằng Discord</button></a>
+                </div>
+                
+                <div class="text-center">
+                    <span class="text-muted small">Đã có tài khoản? </span>
+                    <a href="/login" class="text-primary small fw-bold text-decoration-none">Đăng nhập ngay</a>
                 </div>
             </div>
         </div>
-    </section>
-    <!-- Signup Section End -->
-
-    <!-- Footer Section Begin -->
-    <footer class="footer">
-        <?php require "footer.php" ?>
-      </footer>
-      <!-- Footer Section End -->
-
-    <!-- Js Plugins -->
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/js/base64.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/mixitup.min.js"></script>
-    <script src="/js/jquery.slicknav.js"></script>
-    <script src="/js/owl.carousel.min.js"></script>
-    <script src="/js/main.js?v=<?=$res_version?>"></script>
-
+        <?php require 'footer.php'; ?>
+    </div>
+</div>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/main.js"></script>
 </body>
-
 </html>

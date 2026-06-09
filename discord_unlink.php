@@ -34,67 +34,51 @@ catch (Exception $ex) {
 refresh_csrf();
 ?>
 <!DOCTYPE html>
-<html lang="zxx">
-
+<html lang="vi">
 <head>
     <?php
         $title = "Bỏ Liên Kết Discord";
         require __DIR__ . "/head.php";
     ?>
 </head>
-
 <body>
-    <!-- Header Section Begin -->
-    <header class="header">
-        <?php require "header.php"; ?>
-    </header>
-    <!-- Header End -->
-
-    <!-- Normal Breadcrumb Begin -->
-    <section class="normal-breadcrumb set-bg" data-setbg="/img/normal-breadcrumb.jpg">
-    </section>
-    <!-- Normal Breadcrumb End -->
-
-    <!-- Signup Section Begin -->
-    <section class="signup spad">
-        <div class="container">
-            <div class="login__form page">
-                <h3>Bỏ Liên Kết Discord</h3>
+<div class="app-container">
+    <?php require 'sidebar.php'; ?>
+    <div class="main-content">
+        <?php require "mobile-top-nav.php" ?>
+        <div class="normal-hero"></div>
+        <div class="m-3 mt-4">
+            <div class="card-dark p-4 shadow-lg" style="max-width: 1080px; margin: auto">
+                <h4 class="fw-bold mb-4">Bỏ Liên Kết Discord</h4>
                 <?php if ($fatal_error): ?>
-                <p><?php echo $fatal_error ?></p>
-                <p><a href="/"><button class="site-btn">Về Trang Chủ</button></p>
-                <?php else: ?>
-                <p>Nhập mật khẩu để tiến hành bỏ liên kết với tài khoản Discord của bạn.</p>
-                <form action="" method="POST">
-                    <div class="input__item" style="width: 100%">
-                        <input type="password" name="password" placeholder="Mật Khẩu" required>
-                        <span class="icon_lock"></span>
+                    <div class="alert alert-dark text-white border-secondary" role="alert">
+                        <?php echo $fatal_error ?>
                     </div>
-                    <input type="hidden" name="csrf_token" value="<?php echo get_csrf(); ?>" />
-                    <p style="color: #e36666"><i><?php echo $error ?></i></p>
-                    <button type="submit" name="submit" class="site-btn" value="Submit">Xác Nhận</button>
-                </form>
+                    <div class="text-center mt-3">
+                        <a href="/" class="btn btn-primary fw-bold">Về Trang Chủ</a>
+                    </div>
+                <?php else: ?>
+                    <p class="text-muted mb-4">Nhập mật khẩu để tiến hành bỏ liên kết với tài khoản Discord của bạn.</p>
+                    <form action="" method="POST">
+                        <div class="mb-4">
+                            <label class="form-label text-muted"><b>Mật Khẩu</b></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-dark border-secondary text-muted"><i class="bi bi-lock"></i></span>
+                                <input type="password" class="form-control bg-dark border-secondary text-white" name="password" placeholder="Mật Khẩu" required>
+                            </div>
+                        </div>
+                        
+                        <input type="hidden" name="csrf_token" value="<?php echo get_csrf(); ?>" />
+                        <?php if ($error) echo '<p class="text-danger fst-italic">' . $error . '</p>'; ?>
+                        <button type="submit" name="submit" value="Submit" class="btn btn-primary w-100 py-2 fw-bold mb-2">Xác Nhận</button>
+                    </form>
                 <?php endif ?>
             </div>
         </div>
-    </section>
-    <!-- Signup Section End -->
-
-    <!-- Footer Section Begin -->
-    <footer class="footer">
-        <?php require "footer.php" ?>
-      </footer>
-      <!-- Footer Section End -->
-
-    <!-- Js Plugins -->
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/js/base64.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/mixitup.min.js"></script>
-    <script src="/js/jquery.slicknav.js"></script>
-    <script src="/js/owl.carousel.min.js"></script>
-    <script src="/js/main.js?v=<?=$res_version?>"></script>
-
+        <?php require 'footer.php'; ?>
+    </div>
+</div>
+<script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="/js/main.js"></script>
 </body>
-
 </html>

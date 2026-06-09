@@ -10,7 +10,7 @@ $meta_description = $game ? explode("\n", Html2Text::convert($parsedown->text($g
     <meta name="description" content="<?php echo $meta_description ?>" />
     <meta name="keywords" content="nobihaza,nobihaza game,nobihaza community collection,nobihaza vietnam,nobita's resident evil,nobihaza tieng viet,tai game nobihaza" />
     <meta name="author" content="Serena1432" />
-    <meta name="copyright" content="(C) 2024 Serena1432" />
+    <meta name="copyright" content="(C) 2026 Serena1432" />
     <meta name="application-name" content="Nobihaza Vietnam Community Collection" />
     <meta property="og:title" content="<?php echo $meta_title ?>" />
     <meta property="og:type" content="article" />
@@ -30,14 +30,7 @@ $meta_description = $game ? explode("\n", Html2Text::convert($parsedown->text($g
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title><?php if (!$title) echo 'Nobihaza Vietnam Collection'; else echo $title; ?></title>
 
-    <!-- Google Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Reddit+Sans" rel="stylesheet">
-
-    <!-- Css Styles -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/bootstrap-darkly.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/style.css?v=<?=$res_version?>" type="text/css">
+    <link href="/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/vendor/bootstrap-icons/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="/vendor/geist/index.css">
+    <link rel="stylesheet" href="/css/style.css">

@@ -42,3 +42,6 @@ bulletin.md
 
 # Ignore special websites
 speedrun/
+
+# Ignore old version (in development)
+old/

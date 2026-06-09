@@ -5,6 +5,7 @@ class Nbhzvn_User {
     public $username;
     public $email;
     public $type;
+    public $avatar_url;
     private $passphrase;
     public $display_name;
     public $description;
@@ -32,6 +33,7 @@ class Nbhzvn_User {
         $this->timestamp = $data->timestamp;
         $this->username = $data->username;
         $this->type = $data->type;
+        $this->avatar_url = $data->avatar_url ? ("/uploads/" . $data->avatar_url) : "/img/default_avatar.png";
         $this->passphrase = decrypt_string($data->passphrase);
         $this->display_name = $data->display_name;
         $this->description = $data->description;
@@ -81,6 +83,15 @@ class Nbhzvn_User {
     function change_email($value) {
         db_query('UPDATE `nbhzvn_users` SET `email` = ?, `verification_required` = 1 WHERE `id` = ?', encrypt_string($value), $this->id);
         $this->email = $value;
+    }
+
+    function change_avatar($url) {
+        if ($this->avatar_url && strpos($this->avatar_url, "/uploads/") === 0) {
+            $old_file = __DIR__ . "/../../uploads/" . str_replace("/uploads/", "", $this->avatar_url);
+            if (file_exists($old_file)) unlink($old_file);
+        }
+        db_query('UPDATE `nbhzvn_users` SET `avatar_url` = ? WHERE `id` = ?', $url, $this->id);
+        $this->avatar_url = $url ? ("/uploads/" . $url) : "/img/default_avatar.png";
     }
 
     function change_description($value) {

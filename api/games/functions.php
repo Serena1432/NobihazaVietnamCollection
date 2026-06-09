@@ -1,4 +1,6 @@
 <?php
+use Soundasleep\Html2Text;
+
 function add_game(stdClass $data, bool $pre_approved = false) {
     db_query('INSERT INTO `nbhzvn_games`
         (`timestamp`, `name`, `links`, `beta_links`, `beta_users`, `image`, `screenshots`, `description`, `engine`, `tags`, `release_year`, `author`, `language`, `translator`, `uploader`, `status`, `views`, `views_today`, `downloads_today`, `updated_date`, `file_updated_time`, `downloads`, `supported_os`, `is_featured`, `approved`)
@@ -165,22 +167,31 @@ function get_mention_users($content) {
 
 function echo_homepage_game($tmp_game) {
     global $status_vocab;
-    global $engine_vocab;
+    global $short_engine_vocab;
+    global $parsedown;
     return '
-        <div class="col-lg-4 col-md-6 col-sm-6">
-            <div class="product__item">
-                <a href="/games/' . $tmp_game->id . '"><div class="product__item__pic set-bg" data-setbg="/uploads/' . $tmp_game->image . '">
-                    <div class="ep">' . $status_vocab[$tmp_game->status] . '</div>
-                    <div class="comment"><i class="fa fa-comments"></i> ' . number_format(count($tmp_game->comments()), 0, ",", ".") . '</div>
-                    <div class="view"><i class="fa fa-eye"></i> ' . number_format($tmp_game->views, 0, ",", ".") . '</div>
-                </div></a>
-                <div class="product__item__text">
-                    <ul>
-                        <li>' . $engine_vocab[$tmp_game->engine] . '</li>
-                    </ul>
-                    <h5><a href="/games/' . $tmp_game->id . '">' . htmlentities($tmp_game->name) . '</a></h5>
+        <div class="col-sm-6 col-md-4">
+            <a href="/games/' . $tmp_game->id . '" class="text-decoration-none">
+                <div class="game-card h-100">
+                    <img src="/uploads/' . $tmp_game->image . '" class="game-card-img" alt="' . htmlentities($tmp_game->name) . '">
+                    <div class="game-card-body">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label class="engine-badge">' . $short_engine_vocab[$tmp_game->engine] . '</label>
+                            </div>
+                            <div class="col-sm-6" style="text-align: right">
+                                <label class="status-badge">' . $status_vocab[$tmp_game->status] . '</label>
+                            </div>
+                        </div>
+                        <h5 class="game-card-title text-white">' . htmlentities($tmp_game->name) . '</h5>
+                        <div class="game-description">' . explode("\n", Html2Text::convert($parsedown->text($tmp_game->description)))[0] . '</div>
+                        <div class="game-card-meta mt-2">
+                            <span><i class="bi bi-eye"></i> ' . number_format($tmp_game->views, 0, ",", ".") . '</span>
+                            <span class="text-primary"><i class="bi bi-download"></i> ' . number_format($tmp_game->downloads, 0, ",", ".") . '</span>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </a>
         </div>
     ';
 }
@@ -230,6 +241,13 @@ function beta_users_notifications(Nbhzvn_Game $game = new Nbhzvn_Game(0), $old_t
         $tmp_tester = new Nbhzvn_User($user_id);
         if ($tmp_tester->id) $tmp_tester->send_notification("/games/" . $game->id . "#betaDownloadSection", "**" . $user->display_name() . "** đã mời bạn tham gia thử nghiệm bản Beta của game **" . $game->name . "**.");
     }
+}
+
+function top_uploaders() {
+    $items = [];
+    $query = db_query('SELECT u.id AS user_id, u.avatar_url as avatar, COALESCE(u.display_name, u.username) AS display_name, COUNT(g.id) AS game_count, SUM(g.views) AS total_views, SUM(g.downloads) AS total_downloads FROM nbhzvn_users u INNER JOIN nbhzvn_games g ON u.id = g.uploader WHERE u.type < 3 OR u.type IS NULL GROUP BY u.id, u.username, u.display_name ORDER BY total_downloads DESC LIMIT 10');
+    while ($row = $query->fetch_object()) array_push($items, $row);
+    return $items;
 }
 
 function all_migrate_games() {

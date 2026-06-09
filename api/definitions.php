@@ -56,6 +56,13 @@ $engine_vocab = array(
     ENGINE_OTHER => "Phần Mềm Làm Game Khác"
 );
 
+$short_engine_vocab = array(
+    ENGINE_RPG2K => "RPG2000/2003",
+    ENGINE_RGSS => "RPGXP/VX/VXAce",
+    ENGINE_RPGMV => "RPGMV",
+    ENGINE_OTHER => "Engine Khác"
+);
+
 $language_vocab = array(
     LANGUAGE_VIETNAMESE => "Tiếng Việt",
     LANGUAGE_ENGLISH => "Tiếng Anh",

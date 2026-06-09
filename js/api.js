@@ -34,9 +34,9 @@ async function apiRequest(data, code) {
  * @param {HTMLElement} progressBar
  */
 async function uploadFile(file, progressBar, code) {
-    var progressBarInner = progressBar.getElementsByClassName("progressbar")[0];
+    var progressBarInner = progressBar.getElementsByClassName("progress-bar")[0] || progressBar.getElementsByClassName("progressbar")[0];
     if (progressBar && progressBarInner) {
-        progressBar.style.display = "block";
+        progressBar.style.display = "flex";
         progressBarInner.style.width = "0%";
     }
     const chunks = Math.ceil(file.size / CHUNK_SIZE);
@@ -102,7 +102,7 @@ async function uploadFile(file, progressBar, code) {
             console.error(err);
             if (progressBar && progressBarInner) {
                 progressBar.innerHTML = `<i style="color: #af1932">Lỗi!</i>`;
-                progressBar.classList.remove("progressbar_container");
+                progressBar.classList.remove("progress");
                 progressBar.style.display = "inline";
             }
             return null;

@@ -24,6 +24,11 @@ foreach ($games as $game) {
     }
     catch (Exception $ex) {}
 }
+// Collect user avatars
+$result = db_query('SELECT `avatar_url` FROM `nbhzvn_users` WHERE `avatar_url` IS NOT NULL AND `avatar_url` != ""');
+while ($row = $result->fetch_object()) {
+    array_push($collected_files, $row->avatar_url);
+}
 // Filter unused files
 $deleted_files = array_diff(scandir(__DIR__ . "/uploads"), array_merge([".", "..", ".htaccess", ".migrate_1"], $collected_files));
 // Cleanup process

@@ -1,97 +1,40 @@
-/*  ---------------------------------------------------
-    Theme Name: Anime
-    Description: Anime video tamplate
-    Author: Colorib
-    Author URI: https://colorib.com/
-    Version: 1.0
-    Created: Colorib
----------------------------------------------------------  */
-
-'use strict';
-
-(function ($) {
-
-    /*------------------
-        Preloader
-    --------------------*/
-    $(window).on('load', function () {
-        $(".loader").fadeOut();
-        $("#preloder").delay(200).fadeOut("slow");
-
-        /*------------------
-            FIlter
-        --------------------*/
-        $('.filter__controls li').on('click', function () {
-            $('.filter__controls li').removeClass('active');
-            $(this).addClass('active');
+document.addEventListener("DOMContentLoaded", () => {
+    initSidebarScripts();
+    const gridBtn = document.getElementById("btn-grid-view");
+    const listBtn = document.getElementById("btn-list-view");
+    const gameContainer = document.getElementById("game-list-container");
+    if (gridBtn && listBtn && gameContainer) {
+        gridBtn.addEventListener("click", () => {
+            gameContainer.classList.remove("game-list-view");
+            gridBtn.classList.add("text-primary");
+            gridBtn.classList.remove("text-muted");
+            listBtn.classList.remove("text-primary");
+            listBtn.classList.add("text-muted");
         });
-        if ($('.filter__gallery').length > 0) {
-            var containerEl = document.querySelector('.filter__gallery');
-            var mixer = mixitup(containerEl);
-        }
-    });
-
-    /*------------------
-        Background Set
-    --------------------*/
-    $('.set-bg').each(function () {
-        var bg = $(this).data('setbg');
-        $(this).css('background-image', 'url(' + bg + ')');
-    });
-
-    /*------------------
-		Navigation
-	--------------------*/
-    $(".mobile-menu").slicknav({
-        prependTo: '#mobile-menu-wrap',
-        allowParentLinks: true
-    });
-
-    var hero_s = $(".hero__slider");
-    var autoplayTimeout;
-    hero_s.owlCarousel({
-        loop: true,
-        margin: 0,
-        items: 1,
-        dots: true,
-        nav: true,
-        navText: ["<span class='arrow_carrot-left'></span>", "<span class='arrow_carrot-right'></span>"],
-        animateOut: 'fadeOut',
-        animateIn: 'fadeIn',
-        smartSpeed: 1200,
-        autoHeight: false,
-        autoplay: true,
-        autoplayTimeout: 10000,
-        autoplayHoverPause: false,
-        mouseDrag: false
-    });
-
-    hero_s.on('click', '.owl-prev, .owl-next', function () {
-        hero_s.trigger('stop.owl.autoplay');
-        clearTimeout(autoplayTimeout);
-        autoplayTimeout = setTimeout(function () {
-            hero_s.trigger('play.owl.autoplay', [10000]);
-        }, 2000);
-    });
-
-    /*------------------
-        Scroll To Top
-    --------------------*/
-    $("#scrollToTopButton").click(function() {
-        $("html, body").animate({ scrollTop: 0 }, "slow");
-        return false;
-     });
-
-    function equalizeCarouselHeights() {
-        let maxHeight = 0;
-        $(".owl-item").css("height", "auto");
-        $(".owl-item").each(function() {
-            let thisHeight = $(this).outerHeight();
-            if (thisHeight > maxHeight) maxHeight = thisHeight;
+        listBtn.addEventListener("click", () => {
+            gameContainer.classList.add("game-list-view");
+            listBtn.classList.add("text-primary");
+            listBtn.classList.remove("text-muted");
+            gridBtn.classList.remove("text-primary");
+            gridBtn.classList.add("text-muted");
         });
-        $(".owl-item").css("height", maxHeight + "px");
     }
-    $(document).ready(equalizeCarouselHeights);
-    $(window).resize(equalizeCarouselHeights);
-
-})(jQuery);
+});
+function initSidebarScripts() {
+    const submenuToggles = document.querySelectorAll('.has-submenu > a');
+    submenuToggles.forEach(toggle => {
+        toggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            const parentLi = this.parentElement;
+            parentLi.classList.toggle('open');
+            const icon = this.querySelector('.bi-chevron-down, .bi-chevron-up');
+            if (icon) {
+                if (parentLi.classList.contains('open')) {
+                    icon.classList.replace('bi-chevron-down', 'bi-chevron-up');
+                } else {
+                    icon.classList.replace('bi-chevron-up', 'bi-chevron-down');
+                }
+            }
+        });
+    });
+}
